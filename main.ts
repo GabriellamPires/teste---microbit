@@ -1,4 +1,8 @@
+let Tocar = false
+let cont2 = 0
+let cont1 = 0
 input.onPinPressed(TouchPin.P0, function () {
+    Tocar = false
     basic.showNumber(3)
     basic.showNumber(2)
     basic.showNumber(1)
@@ -15,21 +19,24 @@ input.onPinPressed(TouchPin.P0, function () {
     basic.clearScreen()
 })
 input.onPinPressed(TouchPin.P2, function () {
-    cont2 += 1
-    basic.showLeds(`
-        . . # . .
-        . # # # .
-        # # # # #
-        . # # # .
-        . . # . .
-        `)
-    basic.pause(1000)
-    basic.clearScreen()
+    if (Tocar == false) {
+        cont2 += 1
+        Tocar = true
+        basic.showLeds(`
+            . . # . .
+            . # # # .
+            # # # # #
+            . # # # .
+            . . # . .
+            `)
+        basic.pause(1000)
+        basic.clearScreen()
+    }
 })
 input.onPinPressed(TouchPin.P1, function () {
-    let Tocar = 0
-    if (Tocar == 0) {
+    if (Tocar == false) {
         cont1 += 1
+        Tocar = true
         basic.showLeds(`
             . . . . .
             # # . # #
@@ -41,30 +48,32 @@ input.onPinPressed(TouchPin.P1, function () {
         basic.clearScreen()
     }
 })
-let cont2 = 0
-let cont1 = 0
-for (let index = 0; index < 4; index++) {
-    music.setTempo(130)
-    music.playTone(349, music.beat(BeatFraction.Half))
-    music.playTone(440, music.beat(BeatFraction.Half))
-    music.playTone(494, music.beat(BeatFraction.Whole))
-    music.playTone(349, music.beat(BeatFraction.Half))
-    music.playTone(440, music.beat(BeatFraction.Half))
-    music.playTone(494, music.beat(BeatFraction.Whole))
-    music.playTone(349, music.beat(BeatFraction.Half))
-    music.playTone(440, music.beat(BeatFraction.Half))
-    music.playTone(494, music.beat(BeatFraction.Half))
-    music.playTone(659, music.beat(BeatFraction.Half))
-    music.playTone(587, music.beat(BeatFraction.Whole))
-    music.playTone(494, music.beat(BeatFraction.Half))
-    music.playTone(523, music.beat(BeatFraction.Half))
-    music.playTone(494, music.beat(BeatFraction.Half))
-    music.playTone(392, music.beat(BeatFraction.Half))
-    music.playTone(330, music.beat(BeatFraction.Double))
-    music.playTone(330, music.beat(BeatFraction.Half))
-    music.playTone(294, music.beat(BeatFraction.Half))
-    music.playTone(330, music.beat(BeatFraction.Half))
-    music.playTone(392, music.beat(BeatFraction.Half))
-    music.playTone(330, music.beat(BeatFraction.Double))
-    music.playTone(330, music.beat(BeatFraction.Half))
-}
+basic.forever(function () {
+    if (cont1 == 5) {
+        basic.showLeds(`
+            . # # . .
+            . . # . .
+            . . # . .
+            . . # . .
+            . . . . .
+            `)
+        basic.pause(1000)
+        basic.clearScreen()
+        basic.showString("P1 ganhou")
+        cont1 = 0
+        cont2 = 0
+    } else if (cont2 == 5) {
+        basic.showLeds(`
+            . # # # .
+            . . . # .
+            . . # . .
+            . # . . .
+            . # # # .
+            `)
+        basic.pause(1000)
+        basic.clearScreen()
+        basic.showString("P2 ganhou")
+        cont1 = 0
+        cont2 = 0
+    }
+})
