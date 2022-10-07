@@ -15,8 +15,7 @@ input.onPinPressed(TouchPin.P0, function () {
         # . . . #
         . # # # .
         `)
-    basic.pause(100)
-    basic.clearScreen()
+    basic.pause(500)
 })
 input.onPinPressed(TouchPin.P2, function () {
     if (Tocar == false) {
